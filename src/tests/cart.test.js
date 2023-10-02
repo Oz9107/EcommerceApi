@@ -22,6 +22,16 @@ test("GET /cart", async () => {
   expect(res.body).toBeInstanceOf(Array);
 });
 
+test("GET /cart/:id", async () => {
+  const validCartId = 1;
+  const res = await request(app)
+    .get(`/cart/${validCartId}`)
+    .set("Authorization", `Bearer ${token}`);
+
+  expect(res.status).toBe(200);
+  expect(res.body).toBeDefined();
+});
+
 test("POST /cart", async () => {
   const body = { quantity: "5" };
   const res = await request(app)
@@ -32,6 +42,16 @@ test("POST /cart", async () => {
   expect(res.status).toBe(201);
   expect(res.body.id).toBeDefined();
   expect(res.body.rate).toBe(body.rate);
+});
+test("PUT /cart/:id", async () => {
+  const validCartId = 1;
+  const updatedQuantity = 10;
+  const res = await request(app)
+    .put(`/cart/${validCartId}`)
+    .send({ quantity: updatedQuantity })
+    .set("Authorization", `Bearer ${token}`);
+  expect(res.status).toBe(200);
+  expect(res.body.quantity).toBe(updatedQuantity);
 });
 
 test("DELETE /cart/:id", async () => {

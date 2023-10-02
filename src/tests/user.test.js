@@ -78,17 +78,3 @@ test("DELETE /users/:id", async () => {
     .set("Authorization", `Bearer ${token}`);
   expect(res.status).toBe(204);
 });
-
-/* para crear de muchos a muchos
-//1. Crear un genero
-test("POST /artists/:id/genres debe insertar los generos de un artista", async () => {
-  const genre = await Genre.create({ name: "pop" });
-  //2. Ejecutas el endpoint, pasandole el id del genero creado  
-  const res = await request(app).post(`/artists/${id}/genres`).send([genre.id]);
-  //3. Eliminar
-  await genre.destroy()
-  //4. Expect del status y uno del largo del body
-  expect(res.status).toBe(200);
-  expect(res.body.length).toBe(1);
-});
-*/

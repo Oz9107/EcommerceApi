@@ -42,6 +42,14 @@ test("POST /product", async () => {
   expect(res.body.headline).toBe(body.headline);
 });
 
+test("GET /product/:id", async () => {
+  const res = await request(app)
+    .get(`/product/${id}`)
+    .set("Authorization", `Bearer ${token}`);
+  expect(res.status).toBe(200);
+  expect(res.body).toBeDefined();
+});
+
 test("POST /product/:id/images", async () => {
   const image = await Image.create({
     url: "http://Cualquier-cosa.jpg",
@@ -54,6 +62,18 @@ test("POST /product/:id/images", async () => {
   await image.destroy();
   expect(res.status).toBe(200);
   expect(res.body.length).toBe(1);
+});
+test("PUT /product/:id", async () => {
+  const body = {
+    title: "Updated Title",
+    description: "Updated Description",
+  };
+  const res = await request(app)
+    .put(`/product/${id}`)
+    .send(body)
+    .set("Authorization", `Bearer ${token}`);
+  expect(res.status).toBe(200);
+  expect(res.body).toBeDefined();
 });
 
 test("DELETE /product/:id", async () => {
